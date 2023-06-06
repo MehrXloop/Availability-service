@@ -28,8 +28,9 @@ public class AvailabilityController {
 
     //Adding an availability
     @PostMapping("/add")
-    public void addAnAvailability(@RequestBody Availability availability){
+    public Availability addAnAvailability(@RequestBody Availability availability){
         availabilityRepository.save(availability);
+        return availability;
     }
 
     //Getting all availabilities
