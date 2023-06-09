@@ -23,7 +23,7 @@ public class Availability {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
-
+    private Long counselor_id;
     private Date created;
     private Date updated;   
     private String date;
