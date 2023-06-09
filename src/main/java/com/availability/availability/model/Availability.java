@@ -2,6 +2,7 @@ package com.availability.availability.model;
 
 import java.sql.Date;
 
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +24,8 @@ public class Availability {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
+    
+    @Nonnull
     private Long counselor_id;
     private Date created;
     private Date updated;   

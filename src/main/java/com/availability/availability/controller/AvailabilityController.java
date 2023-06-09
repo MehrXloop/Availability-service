@@ -17,7 +17,7 @@ import com.availability.availability.model.Availability;
 import com.availability.availability.repository.AvailabilityRepository;
 
 
-@CrossOrigin()
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/availability")
 public class AvailabilityController {
