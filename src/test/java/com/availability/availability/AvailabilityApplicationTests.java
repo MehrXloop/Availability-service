@@ -56,8 +56,7 @@ class AvailabilityApplicationTests {
 
 	@Test
 	public void canAddAnAvailability() throws Exception {
-		Availability availability1 = new Availability(1L, Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()),
-				"30 minutes");
+		Availability availability1 = new Availability(1l, 1L, Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()), "30 minutes");
 
 		when(availabilityRepository.save(availability1)).thenReturn((availability1));
 
@@ -71,10 +70,9 @@ class AvailabilityApplicationTests {
 	// Test2:Getting all availabilities
 	@Test
 	public void canGetAllAvailabilities() throws Exception {
-		Availability availability1 = new Availability(1L, Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()),
-				"30 minutes");
-		Availability availability2 = new Availability(2L, Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()),
-				"30 minutes");
+		Availability availability1 = new Availability(1L, 2L, Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()),"30 minutes");
+		Availability availability2 = new Availability(1L, 2L, Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()),"30 minutes");
+
 		List<Availability> listOfAvailabilities = new ArrayList<>();
 		listOfAvailabilities.add(availability1);
 		listOfAvailabilities.add(availability2);
@@ -93,8 +91,8 @@ class AvailabilityApplicationTests {
 	// Test3: Getting an availability
 	@Test
 	public void canGetAnAvailability() throws Exception {
-		Availability availability1 = new Availability(1L, Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()),
-				"30 minutes");
+		Availability availability1 = new Availability(1L, 2L, Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()),"30 minutes");
+
 
 		when(availabilityRepository.findById(1L)).thenReturn(Optional.of(availability1));
 
@@ -130,8 +128,8 @@ class AvailabilityApplicationTests {
 	// Test6: update an availability
 	@Test
 	public void canUpdateAnAvailability() throws Exception {
-		Availability updateAvailability = new Availability(1L, Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()),
-				"30 minutes");
+		Availability updateAvailability = new Availability(1L, 2L, Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()),"30 minutes");
+
 
 		when(availabilityRepository.save(updateAvailability)).thenReturn((updateAvailability));
 		mvc.perform(MockMvcRequestBuilders
