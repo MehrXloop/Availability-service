@@ -26,7 +26,7 @@ public class Availability {
     private Long id;
     
     @Nonnull
-    private Long counselor_id;
+    private Long counselorId;
     private Date created;
     private Date updated;   
     private String date;
