@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -28,6 +30,7 @@ import com.availability.availability.controller.AvailabilityController;
 import com.availability.availability.model.Availability;
 import com.availability.availability.repository.AvailabilityRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @AutoConfigureJsonTesters
 @AutoConfigureMockMvc
@@ -46,17 +49,21 @@ class AvailabilityApplicationTests {
 	private JacksonTester<Availability> jsonAvailability;
 	private JacksonTester<List<Availability>> jsonAvailabilities;
 
+	
 	@BeforeEach
-	public void setUp() {
-		JacksonTester.initFields(this, new ObjectMapper());
-		mvc = MockMvcBuilders.standaloneSetup(availabilityController).build();
-	}
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+        JacksonTester.initFields(this, new ObjectMapper().registerModule(new JavaTimeModule()));
+        ;
+        mvc = MockMvcBuilders.standaloneSetup(availabilityController).build();
+    }
 
 	// Test1: Adding an availability
 
 	@Test
 	public void canAddAnAvailability() throws Exception {
-		Availability availability1 = new Availability(1l, 1L, Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()), "30 minutes");
+		ZonedDateTime now = ZonedDateTime.now();
+		Availability availability1 = new Availability(1l, 1L, now, now, "30 minutes");
 
 		when(availabilityRepository.save(availability1)).thenReturn((availability1));
 
@@ -70,8 +77,9 @@ class AvailabilityApplicationTests {
 	// Test2:Getting all availabilities
 	@Test
 	public void canGetAllAvailabilities() throws Exception {
-		Availability availability1 = new Availability(1L, 2L, Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()),"30 minutes");
-		Availability availability2 = new Availability(1L, 2L, Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()),"30 minutes");
+		ZonedDateTime now = ZonedDateTime.now();
+		Availability availability1 = new Availability(1L, 2L,now, now,"30 minutes");
+		Availability availability2 = new Availability(1L, 2L,now, now,"30 minutes");
 
 		List<Availability> listOfAvailabilities = new ArrayList<>();
 		listOfAvailabilities.add(availability1);
@@ -91,7 +99,8 @@ class AvailabilityApplicationTests {
 	// Test3: Getting an availability
 	@Test
 	public void canGetAnAvailability() throws Exception {
-		Availability availability1 = new Availability(1L, 2L, Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()),"30 minutes");
+		ZonedDateTime now = ZonedDateTime.now();
+		Availability availability1 = new Availability(1L, 2L, now, now,"30 minutes");
 
 
 		when(availabilityRepository.findById(1L)).thenReturn(Optional.of(availability1));
@@ -109,26 +118,27 @@ class AvailabilityApplicationTests {
 
 		mvc.perform(MockMvcRequestBuilders
 				.delete("/availability/deleteall"))
-				.andExpect(MockMvcResultMatchers.status().isOk());
+				.andExpect(MockMvcResultMatchers.status().isNoContent());
 	}
 
 	// Test5: delete an availability with id
 	@Test
 	public void canDeleteAnAvailability() throws Exception {
-		Long id1 = 1L;
+	
 
-		doNothing().when(availabilityRepository).deleteById(id1);
+		doNothing().when(availabilityRepository).deleteById(1L);
 
 		mvc.perform(MockMvcRequestBuilders
 				.delete("/availability/delete/1"))
-				.andExpect(MockMvcResultMatchers.status().isOk());
+				.andExpect(MockMvcResultMatchers.status().isNoContent());
 
 	}
 
 	// Test6: update an availability
 	@Test
 	public void canUpdateAnAvailability() throws Exception {
-		Availability updateAvailability = new Availability(1L, 2L, Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()),"30 minutes");
+		ZonedDateTime now = ZonedDateTime.now();
+		Availability updateAvailability = new Availability(1L, 2L, now, now,"30 minutes");
 
 
 		when(availabilityRepository.save(updateAvailability)).thenReturn((updateAvailability));

@@ -1,6 +1,6 @@
 package com.availability.availability.model;
 
-import java.sql.Date;
+import java.time.ZonedDateTime;
 
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.Entity;
@@ -27,8 +27,8 @@ public class Availability {
     
     @Nonnull
     private Long counselorId;
-    private Date created;
-    private Date updated;   
+    private ZonedDateTime created;
+    private ZonedDateTime updated;   
     private String date;
     
 }
