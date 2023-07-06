@@ -1,6 +1,7 @@
 package com.availability.availability.controller;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -72,7 +73,7 @@ public class AvailabilityController {
             if (!availabilities.isEmpty()) {
                 return ResponseEntity.ok(availabilities);
             } else {
-                return ResponseEntity.notFound().build();
+                return ResponseEntity.ok(availabilities);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -87,7 +88,7 @@ public class AvailabilityController {
     public ResponseEntity<Void> deleteAllAvailabilities() {
         try {
             availabilityRepository.deleteAll();
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -98,8 +99,14 @@ public class AvailabilityController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteAnAvailability(@PathVariable Long id) {
         try {
-            availabilityRepository.deleteById(id);
-            return ResponseEntity.noContent().build();
+            Availability availability = availabilityRepository.findById(id).orElse(null);
+            if(Objects.isNull(availability)){
+                return ResponseEntity.noContent().build();
+            }
+            else{
+                availabilityRepository.deleteById(id);
+                return ResponseEntity.ok().build();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -112,6 +119,7 @@ public class AvailabilityController {
         try {
             Availability updatedAvailability = availabilityRepository.save(availability);
             return ResponseEntity.ok(updatedAvailability);
+
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
