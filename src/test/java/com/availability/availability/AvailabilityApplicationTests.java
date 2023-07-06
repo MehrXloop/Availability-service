@@ -118,7 +118,7 @@ class AvailabilityApplicationTests {
 
 		mvc.perform(MockMvcRequestBuilders
 				.delete("/availability/deleteall"))
-				.andExpect(MockMvcResultMatchers.status().isNoContent());
+				.andExpect(MockMvcResultMatchers.status().isOk());
 	}
 
 	// Test5: delete an availability with id
