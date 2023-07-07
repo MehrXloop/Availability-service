@@ -130,7 +130,7 @@ class AvailabilityApplicationTests {
 
 		mvc.perform(MockMvcRequestBuilders
 				.delete("/availability/delete/1"))
-				.andExpect(MockMvcResultMatchers.status().isNoContent());
+				.andExpect(MockMvcResultMatchers.status().isOk());
 
 	}
 
