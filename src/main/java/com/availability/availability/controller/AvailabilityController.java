@@ -59,7 +59,7 @@ public class AvailabilityController {
             if (availability != null) {
                 return ResponseEntity.ok(availability);
             } else {
-                return ResponseEntity.notFound().build();
+                return ResponseEntity.ok(availability);
             }
         } catch (Exception e) {
             e.printStackTrace();
