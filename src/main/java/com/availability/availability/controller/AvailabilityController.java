@@ -101,7 +101,7 @@ public class AvailabilityController {
         try {
             Availability availability = availabilityRepository.findById(id).orElse(null);
             if(Objects.isNull(availability)){
-                return ResponseEntity.noContent().build();
+                return ResponseEntity.ok().build();
             }
             else{
                 availabilityRepository.deleteById(id);
