@@ -39,6 +39,19 @@ public class AvailabilityController {
         }
     }
 
+
+    // Getting all availabilities
+    @GetMapping("")
+    public ResponseEntity<List<Availability>> getAllAvailabilitiesa() {
+        try {
+            List<Availability> availabilities = availabilityRepository.findAll();
+            return ResponseEntity.ok(availabilities);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     // Getting all availabilities
     @GetMapping("/all")
     public ResponseEntity<List<Availability>> getAllAvailabilities() {
